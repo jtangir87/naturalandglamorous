@@ -7,7 +7,10 @@
 {% endblock shop_crumbs %}
 
 {% block shop_content %}
-
+{% if products.count == 0  %}
+<div class="text-center">
+<h1>Coming Soon!</h1>
+{% else %}
         <div class="row">
 {% for product in products %}
         <div class="col-lg-4">
@@ -56,7 +59,7 @@
 {% endfor %}
 </div>
 
-
+{% endif %}
  
 {% endblock shop_content %}
 
