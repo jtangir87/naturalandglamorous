@@ -1,0 +1,101 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+
+{% block shop_crumbs %}
+          <li><a href="{% url 'products:shop' %}">Shop</a></li>
+          <li>Cart</li>
+{% endblock shop_crumbs %}
+
+
+
+{% block shop_content %}
+
+  <div class="row">
+    <div class="col-lg-10 col-md-10 mx-auto">
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th style="width: 50%;">Item</th>
+            <th class="text-center" style="width: 15%;">Unit Price</th>
+            <th class="text-center" style="width: 10%;">Quantity</th>
+            <th class="text-center" style="width: 15%;">Total Price</th>
+            <th style="width: 10%;"></th>
+          </tr>
+          {% for item in cart %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td class="text-center">${{ item.unit_price }}</td>
+            <td class="text-center">
+              <form method="POST" action="{% url 'cart:update_cart_item' %}">
+                {% csrf_token %}
+                <input
+                  style="margin-bottom: 5px; max-width: 155px;"
+                  type="number"
+                  name="quantity"
+                  class="form-control"
+                  step="1"
+                  min="1"
+                  value="{{ item.quantity }}"
+                />
+                <button
+                  value="{{item.product.id}}"
+                  class="btn btn-teal btn-sm py-1"
+                  name="product_id"
+                  type="submit"
+                >
+                  Update
+                </button>
+              </form>
+            </td>
+            <td class="text-center">${{ item.total_price }}</td>
+            <td class="text-center">
+              <a
+                class="btn btn-outline-danger btn-sm mt-3"
+                href="{% url 'cart:remove_from_cart' product_id=item.product.id %}"
+                >Remove</a
+              >
+            </td>
+          </tr>
+          {% if item.selections %}
+          <tr>
+            <td colspan="5" style="font-size:.8rem; padding-left: 50px;">{{item.selections}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %} {% if cart.count >= 1 %}
+          {% comment %} <tr>
+            <td>Sales Tax</td>
+            <td></td>
+            <td class="text-center">{{request.tenant.profile.sales_tax}}%</td>
+            <td class="text-center">${{tax|floatformat:2}}</td>
+            <td></td>
+          </tr> {% endcomment %}
+          <tr>
+            <td>Shipping</td>
+            <td></td>
+            <td></td>
+            <td class="text-center">$TBD</td>
+            <td></td>
+          </tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+    {% if cart.count >= 1 %}
+    <div class="col-lg-10 col-md-10 mx-auto text-right">
+      <h5 class="text-right" style="font-family: 'Open Sans', sans-serif;">Total: ${{total|floatformat:2}}</h5>
+          <a class="btn btn-teal" href="#">Checkout</a>
+
+  
+
+
+      
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+ 
+{% endblock shop_content %}
+
+
+

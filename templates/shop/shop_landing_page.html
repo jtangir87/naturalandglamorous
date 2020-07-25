@@ -1,0 +1,64 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+
+
+{% block shop_crumbs %}
+    <li>Shop</li>
+{% endblock shop_crumbs %}
+
+{% block shop_content %}
+
+        <div class="row">
+{% for product in products %}
+        <div class="col-lg-4">
+            <div class="card">
+                <img class="card-img-top product-list-img" src="{{product.def_img.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">{{product.name}}</h4>
+                    <p class="card-text">{{product.description|safe|truncatechars:"50"}}<small><button type="button" class="btn prod-info-btn">More Info</button></small></p>
+                    <p class="card-text text-center"><small class="text-muted">${{product.price}}</small></p>
+                    <form method="POST" action="{% url 'cart:add_to_cart' %}" class="js-add-to-cart-direct text-center">
+                        {% csrf_token %}
+                        <input
+                        type="hidden"
+                        id="product_id"
+                        name="product_id"
+                        class="form-control"
+                        value="{{product.id}}"
+                        />
+                        <div class="input-group">
+                            <input
+                            style="max-width: 65px; margin-left:25%;"
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            class="form-control"
+                            min="1"
+                            step="1"
+                            value="1"
+                            />
+                            <span class="input-group-btn">
+                                <button
+                                class="btn btn-teal"
+                                type="submit"
+                                >
+                                Add to Cart
+                                </button> 
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+{% endfor %}
+</div>
+
+
+ 
+{% endblock shop_content %}
+
+
+

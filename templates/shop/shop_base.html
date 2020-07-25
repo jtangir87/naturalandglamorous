@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block headscript %}
+<link href="{% static 'css/shop.css' %}" rel="stylesheet">
+{% endblock headscript %}
+
+{% block content %}
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+<div class="container d-flex align-items-center">
+
+    <div class="mr-auto">
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            {% block shop_crumbs %}
+
+            {% endblock shop_crumbs %}
+          </ol>
+    </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+    
+            <li {% if request.resolver_match.view_name == 'home' %}class="active"{% else %}{% endif %}><a href="#">Login</a></li>
+            {% comment %} <li><a href="our-story.html">About Me</a></li> {% endcomment %}
+            <li {% if "/vlog" in request.path %}class="active"{% else %}{% endif %}><a href="#">Create Account</a></li> 
+            <li><a href="{% url 'cart:get_cart' %}"><i class="fas fa-shopping-cart fa-lg"></i></a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+        <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container">
+      {% block shop_content %}
+      {% endblock shop_content %}
+     </div>
+    </section><!-- End Blog Section -->
+
+  </main><!-- End #main -->
+
+<div class="modal fade" id="modal-cart-added">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <div class="modal-header">
+              <h5 class="modal-title">Item Added to Cart</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <a class="btn btn-success mb-2" href="{% url 'cart:get_cart' %}">View Cart</a>
+        <button type="button" class="btn btn-info mb-2" data-dismiss="modal">Continue Shopping</button>
+      </div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+
+{% block footscript %}
+<script src="{%  static 'js/cart.js' %}"></script>
+{% endblock footscript %}
+

@@ -1,0 +1,19 @@
+.product-list-img {
+    max-width: 100%;
+    max-height: auto;
+}
+
+.prod-info-btn {
+    color: #fff;
+    background-color: #d92ae9;
+    border-color: #d92ae9;
+    font-size: .75rem;
+    line-height: 1.2;
+    margin-left: 5px;
+}
+
+.btn-teal {
+    color: #fff;
+    background-color: #51aeb3;
+    border-color: #51aeb3;
+}

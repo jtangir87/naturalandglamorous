@@ -1,0 +1,42 @@
+{% extends 'blog/vlog_base.html' %}
+{% load embed_video_tags %}
+    {% block vlog_breadcrumbs %}
+    
+          <h2>Vlog</h2>
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>Vlog</li>
+          </ol>
+    {% endblock vlog_breadcrumbs %}
+
+    {% block vlog_content %}
+
+
+            {% for vlog in vlogs  %}
+            {% video vlog.video_url as video %}
+            <article class="entry" data-aos="fade-up">
+
+              <div class="entry-img">
+                <iframe width="100%" height="400px"
+                    src="{{video.url}}">
+                    </iframe>
+              </div>
+
+              <h2 class="entry-title">
+                <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}">{{vlog.title}}</a>
+              </h2>
+
+              <div class="entry-content">
+                <p>
+                  {{vlog.description|safe|truncatechars:"150"}}
+                </p>
+                <div class="read-more">
+                  <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}">Read More</a>
+                </div>
+              </div>
+            {% endvideo %}
+            </article><!-- End blog entry -->
+            
+            {% endfor %}
+
+    {% endblock vlog_content %} 
