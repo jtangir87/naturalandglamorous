@@ -20,15 +20,20 @@ Vlogs | {{category.name}}
     
 
       {% for vlog in vlogs  %}
-      {% video vlog.video_url as video %}
-      <article class="entry {% for cat in vlog.categories.all %}{{cat.filter_name}} {% endfor %}" data-aos="fade-up">
 
-        <div class="entry-img">
-          <iframe width="100%" height="400px"
-              src="{{video.url}}">
-              </iframe>
-        </div>
+        <article class="entry" data-aos="fade-up">
 
+          <div class="entry-img">
+            {% if vlog.video_url %}
+              {% video vlog.video_url as video %}
+                <iframe width="100%" height="400px"
+                    src="{{video.url}}">
+                  </iframe>
+                {% endvideo %}
+            {% elif vlog.header_img %}
+              <img class="img-fluid" src="{{vlog.header_img.url}}" alt="Card image cap">
+            {% endif %}
+          </div>
         <h2 class="entry-title">
           <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}">{{vlog.title}}</a>
         </h2>
@@ -41,7 +46,6 @@ Vlogs | {{category.name}}
             <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}">Read More</a>
           </div>
         </div>
-      {% endvideo %}
       </article><!-- End blog entry -->
       
       {% endfor %}

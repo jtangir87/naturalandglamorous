@@ -22,8 +22,16 @@ class Category(models.Model):
         return count
 
 
+def vlog_uploads(instance, filename):
+    upload_path = "vlog"
+    return os.path.join(upload_path, filename.lower())
+
+
 class VlogPost(models.Model):
-    video_url = EmbedVideoField(verbose_name="YouTube Link")
+    video_url = EmbedVideoField(
+        verbose_name="YouTube Link", blank=True, null=True)
+    header_img = models.ImageField(
+        upload_to="vlog_uploads", blank=True, null=True)
     title = models.CharField(max_length=150)
     slug = AutoSlugField(populate_from='title',
                          unique_with='created_at__month')

@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('dev/backend/', admin.site.urls),
+    path('cms/', admin.site.urls),
     path('', include("pages.urls")),
     path('vlog/', include("blog.urls")),
     path('shop/', include("products.urls")),
