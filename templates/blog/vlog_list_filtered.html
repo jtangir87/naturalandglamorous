@@ -1,5 +1,9 @@
 {% extends 'blog/vlog_base.html' %}
 
+{% block title_tag %}
+Vlogs | {{category.name}}
+{% endblock title_tag %}
+
 {% load embed_video_tags %}
 
   {% block vlog_breadcrumbs %}
