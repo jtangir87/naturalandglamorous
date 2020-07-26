@@ -1,10 +1,25 @@
 {% extends 'blog/vlog_base.html' %}
-
+{% load embed_video_tags %}
 {% block title_tag %}
 {{vlog.title}}
 {% endblock title_tag %}
 
-{% load embed_video_tags %}
+{% block og_title %}
+  <meta property="og:title" content="Natural & Glamorous | {{vlog.title}}" />
+{% endblock og_title %}
+
+{% if vlog.video_url %}
+{% block og_video %}
+{% video vlog.video_url as video %}              
+<meta property="og:type" content="video">
+<meta property="og:video" content="{{video.url}}">
+<meta property="og:video:type" content="application/x-shockwave-flash">
+<meta property="og:site_name" content="YouTube">
+ {% endvideo %}
+{% endblock og_video %}
+{% endif %}
+
+
     {% block vlog_breadcrumbs %}
     
           <h2>Vlog</h2>

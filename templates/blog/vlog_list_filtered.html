@@ -4,6 +4,10 @@
 Vlogs | {{category.name}}
 {% endblock title_tag %}
 
+{% block og_title %}
+  <meta property="og:title" content="Natural & Glamorous | Vlogs: {{category.name}} | Be Vibrant, Youthful, & Glow from the Inside Out" />
+{% endblock og_title %}
+
 {% load embed_video_tags %}
 
   {% block vlog_breadcrumbs %}
