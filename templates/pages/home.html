@@ -124,7 +124,7 @@
                 <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{video.thumbnail}}" alt="">{{vlog.title}}</a>
               {% endvideo %}
             {% elif vlog.header_img %}
-                <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{vlog.header_img.url}}" alt="" style="max-height:125px; max-width:200px;">{{vlog.title}}</a>
+                <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{vlog.header_img.url}}" alt="" style="max-height:125px; max-width:100%;">{{vlog.title}}</a>
             {% endif %}
 
 
