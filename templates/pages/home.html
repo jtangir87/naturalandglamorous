@@ -118,9 +118,16 @@
 
         <div class="owl-carousel recent-photos-carousel">
           {% for vlog in rec_vlogs %}
-            {% video vlog.video_url as video %}
-              <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{video.thumbnail}}" alt=""></a>
-            {% endvideo %}
+
+            {% if vlog.video_url %}
+              {% video vlog.video_url as video %}
+                <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{video.thumbnail}}" alt="">{{vlog.title}}</a>
+              {% endvideo %}
+            {% elif vlog.header_img %}
+                <a href="{% url 'blog:vlog_detail' slug=vlog.slug %}" ><img src="{{vlog.header_img.url}}" alt="" style="max-height:125px; max-width:200px;">{{vlog.title}}</a>
+            {% endif %}
+
+
           {% endfor %}
         </div>
 
