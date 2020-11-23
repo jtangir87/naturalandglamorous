@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.views.generic import DetailView
+
+
 from .models import ProductCategory, Product
 
 # Create your views here.
@@ -14,3 +17,8 @@ def shop_landing_page(request):
     }
 
     return render(request, "shop/shop_landing_page.html", context)
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = "shop/product_detail.html"
+    context_object_name = "product"

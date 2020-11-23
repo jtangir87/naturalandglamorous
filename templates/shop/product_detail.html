@@ -1,10 +1,11 @@
 {% extends 'shop/shop_base.html' %}
 {% load static %}
 
-{% block title_tag %} Shop {% endblock title_tag %}
+{% block title_tag %} {{product.name}} {% endblock title_tag %}
 
 {% block shop_crumbs %}
-    <li>Shop</li>
+    <li><a href="">Shop</a></li>
+    <li>{{product.name}}</li>
 {% endblock shop_crumbs %}
 
 {% block shop_content %}
