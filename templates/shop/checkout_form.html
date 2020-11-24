@@ -1,0 +1,182 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+{% load bootstrap4 %} 
+{% load template_filters %} 
+
+{% block headscript %}
+<style>
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+.StripeElement {
+  box-sizing: border-box;
+
+  height: 40px;
+
+  padding: 10px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: white;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+</style>
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock headscript %}
+
+{% block shop_crumbs %}
+          <li><a href="{% url 'products:shop' %}">Shop</a></li>
+          <li>Checkout</li>
+{% endblock shop_crumbs %}
+
+
+
+{% block shop_content %}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 mx-auto">
+      <table class="table">
+        <tr>
+          <th>Item</th>
+          <th class="text-center">Quantity</th>
+          <th class="text-center">Total Price</th>
+        </tr>
+        {% for item in cart %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td class="text-center">{{ item.quantity }}</td>
+          <td class="text-center">${{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+
+      </table>
+      <h5 class="text-center">Order Total: ${{total|floatformat:2}}</h5>
+    </div>
+    <div class="col-lg-6 col-md-6 mx-auto">
+    {% if stripe_error %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Payment Error: </strong> {{stripe_error}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+      <form action="#" method="post" id="payment-form">
+        {% bootstrap_form_errors form %} 
+        {% csrf_token %}
+          {% bootstrap_field form.name layout="horizontal" %}
+          {% bootstrap_field form.email layout="horizontal" %}
+          {% bootstrap_field form.street_1 layout="horizontal" %}
+          {% bootstrap_field form.city layout="horizontal" %}
+          {% bootstrap_field form.state layout="horizontal" %}
+          {% bootstrap_field form.zip layout="horizontal" %}    
+ 
+        
+          <label for="card-element">
+              Credit or Debit Card
+            </label>
+            <div id="card-element">
+              <!-- A Stripe Element will be inserted here. -->
+            </div>
+          <div class="text-center"><button class="btn btn-primary mt-3">Purchase</button></div>
+        
+      </form>
+    </div>
+  </div>
+
+ 
+{% endblock shop_content %}
+
+
+
+
+{% block footscript %}
+<script>
+// Create a Stripe client.
+var stripe = Stripe('{{key}}');
+
+// Create an instance of Elements.
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+var style = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+card.on('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the user if there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+// Submit the form with the token ID.
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+
+  // Submit the form
+  form.submit();
+}
+</script>
+{% endblock footscript %}

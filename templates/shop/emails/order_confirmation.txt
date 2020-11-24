@@ -1,0 +1,18 @@
+Thank you for your order from Natural & Glamorous! Please confirm the below info is correct.
+If not, please reach out to us immediately!
+
+Name: {{name}}
+Email: {{email}}
+
+Shipping Info
+
+{{street_1}}
+{{city}}, {{state}} {{zip}}
+
+Order
+{% for item in cart %}
+{{item.product.name}} - {{ item.quantity }} -  ${{item.total_price}}
+
+{% endfor %}
+
+ORDER TOTAL: {{amount}}

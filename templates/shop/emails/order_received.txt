@@ -1,0 +1,19 @@
+NEW WEBSITE ORDER RECEIVED
+
+Customer Info
+
+Name: {{name}}
+Email: {{email}}
+
+Shipping Info
+
+{{street_1}}
+{{city}}, {{state}} {{zip}}
+
+Order
+{% for item in cart %}
+{{item.product.name}} - {{ item.quantity }} -  ${{item.total_price}}
+
+{% endfor %}
+
+ORDER TOTAL: {{amount}}

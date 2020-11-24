@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'products',
     'cart',
-
+    'bootstrap4',
     'localflavor',
     'embed_video',
     'django_summernote',

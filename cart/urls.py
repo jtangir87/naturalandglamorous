@@ -16,7 +16,9 @@ Including another URLconf
 
 
 from django.urls import path
-from .views import add_to_cart, get_cart, remove_from_cart, update_cart_item
+from .views import add_to_cart, get_cart, remove_from_cart, update_cart_item, checkout
+
+from django.views.generic import TemplateView
 
 app_name = "cart"
 
@@ -25,4 +27,7 @@ urlpatterns = [
     path('', get_cart, name="get_cart"),
     path("update", update_cart_item, name="update_cart_item"),
     path("<int:product_id>/remove", remove_from_cart, name="remove_from_cart"),
+    path("checkout", checkout, name="checkout"),
+    path("thanks", TemplateView.as_view(
+        template_name="shop/thank_you.html"), name="thanks"),
 ]

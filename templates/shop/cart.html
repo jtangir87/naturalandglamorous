@@ -69,13 +69,13 @@
             <td class="text-center">${{tax|floatformat:2}}</td>
             <td></td>
           </tr> {% endcomment %}
-          <tr>
+          {% comment %} <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td class="text-center">$TBD</td>
             <td></td>
-          </tr>
+          </tr> {% endcomment %}
           {% endif %}
         </table>
       </div>
@@ -83,7 +83,7 @@
     {% if cart.count >= 1 %}
     <div class="col-lg-10 col-md-10 mx-auto text-right">
       <h5 class="text-right" style="font-family: 'Open Sans', sans-serif;">Total: ${{total|floatformat:2}}</h5>
-          <a class="btn btn-teal" href="#">Checkout</a>
+          <a class="btn btn-teal" href="{% url 'cart:checkout' %}">Checkout</a>
 
   
 

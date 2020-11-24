@@ -18,7 +18,9 @@ def shop_landing_page(request):
 
     return render(request, "shop/shop_landing_page.html", context)
 
+
 class ProductDetail(DetailView):
     model = Product
     template_name = "shop/product_detail.html"
     context_object_name = "product"
+    slug_url_kwarg = 'slug'

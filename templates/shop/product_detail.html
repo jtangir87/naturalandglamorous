@@ -9,19 +9,18 @@
 {% endblock shop_crumbs %}
 
 {% block shop_content %}
-{% if products.count == 0  %}
-<div class="text-center">
-<h1>Coming Soon!</h1>
-{% else %}
+
         <div class="row">
-{% for product in products %}
-        <div class="col-lg-4">
-            <div class="card">
-                <img class="card-img-top product-list-img" src="{{product.def_img.url}}" alt="Card image cap">
+            <div class="col-md-6">
+                <img class="img-fluid" src="{{product.def_img.url}}" alt="{{product.name}}">
+            </div>
+
+        <div class="col-md-6">
+            <div class="card prod-detail-card">
                 <div class="card-body">
-                    <h4 class="card-title ">{{product.name}}</h4>
-                    <p class="card-text">{{product.description |truncatewords_html:10|safe}}<small><button type="button" class="btn prod-info-btn">More Info</button></small></p>
-                    <p class="card-text text-center">${{product.price}}</p>
+                    <h4 class="card-title prod-detail-title">{{product.name}}</h4>
+                    <p class="card-text prod-detail-description">{{product.description|safe}}</p>
+                    <p class="card-text text-center prod-detail-price"><strong>${{product.price}}</strong></p>
                     <form method="POST" action="{% url 'cart:add_to_cart' %}" class="js-add-to-cart-direct text-center">
                         {% csrf_token %}
                         <input
@@ -55,13 +54,8 @@
                 </div>
             </div>
         </div>
-
-
-
-{% endfor %}
 </div>
 
-{% endif %}
  
 {% endblock shop_content %}
 

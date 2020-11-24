@@ -16,11 +16,11 @@ Including another URLconf
 
 
 from django.urls import path
-from .views import shop_landing_page
+from .views import shop_landing_page, ProductDetail
 
 app_name = "products"
 
 urlpatterns = [
     path('', shop_landing_page, name="shop"),
-
+    path('<slug:slug>', ProductDetail.as_view(), name="product_detail")
 ]

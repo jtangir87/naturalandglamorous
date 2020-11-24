@@ -17,3 +17,16 @@
     background-color: #51aeb3;
     border-color: #51aeb3;
 }
+
+.prod-detail-card {
+    border: 0px;
+}
+
+.prod-detail-title {
+    font-size:34px;
+    font-weight: 700;
+}
+
+.prod-detail-price {
+    font-size: 23px;
+}
